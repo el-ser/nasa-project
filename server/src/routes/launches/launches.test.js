@@ -12,9 +12,11 @@ describe("Launches API", () => {
   });
 
   describe("Test GET /launches", () => {
+    const endpoint = "/v1/launches";
+
     it("It should respond with 200 success", async () => {
       const response = await request(app)
-        .get("/launches")
+        .get(endpoint)
         .expect(200)
         .expect("Content-Type", /json/);
     });
@@ -48,9 +50,11 @@ describe("Launches API", () => {
       launchDate: "January 27, 2027",
     };
 
+    const endpoint = "/v1/launches";
+
     it("It should respond with 201 created", async () => {
       const response = await request(app)
-        .post("/launches")
+        .post(endpoint)
         .send(completeLaunchData)
         .expect("Content-Type", /json/)
         .expect(201);
@@ -65,7 +69,7 @@ describe("Launches API", () => {
     });
     it("It should catch missing required properties", async () => {
       const response = await request(app)
-        .post("/launches")
+        .post(endpoint)
         .send(launchWithoutDate)
         .expect("Content-Type", /json/)
         .expect(400);
@@ -76,7 +80,7 @@ describe("Launches API", () => {
     });
     it("It should catch invalid dates", async () => {
       const response = await request(app)
-        .post("/launches")
+        .post(endpoint)
         .send(launchDataWithInvalidDate)
         .expect("Content-Type", /json/)
         .expect(400);
